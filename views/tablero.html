@@ -13,6 +13,27 @@
   </header>
 
   <div class="container">
+    <!-- Mensajes flash -->
+    {% with messages = get_flashed_messages(with_categories=true) %}
+      {% if messages %}
+        {% for categoria, mensaje in messages %}
+          <div class="flash {{ categoria }}">{{ mensaje }}</div>
+        {% endfor %}
+      {% endif %}
+    {% endwith %}
+
+    <!-- Botón importar Excel -->
+    {% if mostrar_importar or true %}
+    <section class="seccion">
+      <h2>Importar Excel de Clientes</h2>
+      <p>Sube un archivo .xlsx o .xls con la lista actualizada de clientes. El archivo se guarda en <code>uploads/</code> (no se modifica <code>data/</code>).</p>
+      <form action="{{ url_for('polizas.importar_excel') }}" method="post" enctype="multipart/form-data">
+        <input type="file" name="archivo" accept=".xlsx,.xls" required>
+        <button type="submit" class="btn">Subir Excel</button>
+      </form>
+    </section>
+    {% endif %}
+
     <!-- Contadores -->
     <div class="contadores">
       <div class="contador">
@@ -96,10 +117,13 @@
       </div>
     </section>
 
-    <!-- Descarga de avisos -->
+    <!-- Generar y exportar avisos -->
     <section class="seccion">
-      <h2>Descargar Avisos</h2>
-      <a href="{{ url_for('polizas.descargar_avisos') }}" class="btn">Descargar ZIP con todos los avisos</a>
+      <h2>Gestión de Avisos</h2>
+      <div style="display: flex; gap: 1rem; flex-wrap: wrap;">
+        <a href="{{ url_for('polizas.generar_avisos') }}" class="btn">Generar avisos</a>
+        <a href="{{ url_for('polizas.descargar_avisos') }}" class="btn">Exportar avisos (ZIP)</a>
+      </div>
     </section>
   </div>
 </body>

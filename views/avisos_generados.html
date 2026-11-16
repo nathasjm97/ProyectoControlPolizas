@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Avisos Generados - Control de Pólizas</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='estilos.css') }}">
+</head>
+<body>
+  <header>
+    <h1>Avisos Generados</h1>
+    <p>PDFs de aviso de renovación creados para pólizas por vencer y vencidas</p>
+  </header>
+
+  <div class="container">
+    <a href="{{ url_for('polizas.tablero') }}" class="btn" style="margin-bottom: 1rem; display: inline-block;">← Volver al tablero</a>
+
+    {% if archivos %}
+    <section class="seccion">
+      <h2>{{ archivos|length }} aviso(s) generado(s)</h2>
+      <ul class="primas-lista">
+        {% for a in archivos %}
+        <li>
+          <strong>{{ a.numero }}</strong> - {{ a.aseguradora }} - {{ a.cliente }}
+          (<span class="estado estado-{{ a.estado.replace(' ', '-') }}">{{ a.estado }}</span>)
+          <a href="{{ url_for('static', filename='output/avisos/' ~ a.nombre_archivo) }}" class="btn" style="font-size: 0.85rem; padding: 0.25rem 0.5rem;">Descargar PDF</a>
+        </li>
+        {% endfor %}
+      </ul>
+    </section>
+    {% else %}
+    <section class="seccion">
+      <h2>No hay avisos para generar</h2>
+      <p>No hay pólizas por vencer o vencidas en este momento.</p>
+    </section>
+    {% endif %}
+  </div>
+</body>
+</html>
