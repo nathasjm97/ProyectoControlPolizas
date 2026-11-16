@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tablero - Control de Pólizas</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='estilos.css') }}">
+</head>
+<body>
+  <header>
+    <h1>Control de Pólizas</h1>
+    <p>Tablero de pólizas - corte al 2 de noviembre de 2026</p>
+  </header>
+
+  <div class="container">
+    <!-- Contadores -->
+    <div class="contadores">
+      <div class="contador">
+        <h3>Vigentes</h3>
+        <div class="valor">{{ contadores.get('Vigente', 0) }}</div>
+      </div>
+      <div class="contador">
+        <h3>Por vencer</h3>
+        <div class="valor">{{ contadores.get('Por vencer', 0) }}</div>
+      </div>
+      <div class="contador">
+        <h3>Vencidas</h3>
+        <div class="valor">{{ contadores.get('Vencida', 0) }}</div>
+      </div>
+    </div>
+
+    <!-- Primas por aseguradora -->
+    <section class="seccion">
+      <h2>Primas por Aseguradora (no vencidas)</h2>
+      {% if primas %}
+      <ul class="primas-lista">
+        {% for aseguradora, monto in primas.items() %}
+        <li><strong>{{ aseguradora }}:</strong> CRC {{ "{:,.2f}".format(monto) }}</li>
+        {% endfor %}
+      </ul>
+      {% else %}
+      <p>No hay primas por mostrar.</p>
+      {% endif %}
+    </section>
+
+    <!-- Inconsistencias -->
+    <section class="seccion">
+      <h2>Inconsistencias</h2>
+      {% if inconsistencias %}
+        {% for inc in inconsistencias %}
+        <div class="inconsistencia">{{ inc }}</div>
+        {% endfor %}
+      {% else %}
+      <p>No hay inconsistencias detectadas.</p>
+      {% endif %}
+    </section>
+
+    <!-- Tabla de pólizas -->
+    <section class="seccion">
+      <h2>Tabla de Pólizas (ordenadas por urgencia)</h2>
+      <div class="tabla-container">
+        <table>
+          <thead>
+            <tr>
+              <th>Número</th>
+              <th>Aseguradora</th>
+              <th>Tomador</th>
+              <th>Cédula</th>
+              <th>Vigencia hasta</th>
+              <th>Días para vencer</th>
+              <th>Estado</th>
+              <th>Acción</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for p in resultados %}
+            <tr>
+              <td>{{ p.numero }}</td>
+              <td>{{ p.aseguradora }}</td>
+              <td>{{ p.nombre }}</td>
+              <td>{{ p.cedula }}</td>
+              <td>{{ p.hasta.strftime('%d/%m/%Y') if p.hasta else 'N/A' }}</td>
+              <td>{{ p.dias_hasta_vencer if p.dias_hasta_vencer is not none else 'N/A' }}</td>
+              <td><span class="estado estado-{{ p.estado.replace(' ', '-') }}">{{ p.estado }}</span></td>
+              <td>
+                {% if p.estado != 'Vigente' %}
+                <a href="{{ url_for('polizas.aviso', numero=p.numero) }}" class="btn">Ver aviso</a>
+                {% else %}
+                <span style="color: #888;">Sin aviso</span>
+                {% endif %}
+              </td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- Descarga de avisos -->
+    <section class="seccion">
+      <h2>Descargar Avisos</h2>
+      <a href="{{ url_for('polizas.descargar_avisos') }}" class="btn">Descargar ZIP con todos los avisos</a>
+    </section>
+  </div>
+</body>
+</html>

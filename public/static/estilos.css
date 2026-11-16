@@ -1,0 +1,199 @@
+/* Diseño de la app Control Polizas */
+
+:root {
+  --color-rojo: #AE1800;
+  --color-negro: #201E1D;
+  --color-gris-claro: #F3F2F2;
+  --color-blanco: #FFFFFF;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: Arial, sans-serif;
+  background-color: var(--color-gris-claro);
+  color: var(--color-negro);
+  line-height: 1.6;
+}
+
+/* Header */
+header {
+  background-color: var(--color-rojo);
+  color: var(--color-blanco);
+  padding: 1.5rem;
+  text-align: center;
+}
+
+header h1 {
+  font-size: 1.8rem;
+}
+
+/* Contenedor principal */
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 1rem;
+}
+
+/* Contadores */
+.contadores {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 2rem;
+  flex-wrap: wrap;
+}
+
+.contador {
+  background-color: var(--color-blanco);
+  border-left: 5px solid var(--color-rojo);
+  padding: 1rem;
+  flex: 1;
+  min-width: 150px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.contador h3 {
+  color: var(--color-rojo);
+  font-size: 0.9rem;
+  text-transform: uppercase;
+  margin-bottom: 0.5rem;
+}
+
+.contador .valor {
+  font-size: 2rem;
+  font-weight: bold;
+  color: var(--color-negro);
+}
+
+/* Secciones */
+.seccion {
+  background-color: var(--color-blanco);
+  margin-bottom: 2rem;
+  padding: 1.5rem;
+  border-radius: 4px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.seccion h2 {
+  color: var(--color-rojo);
+  margin-bottom: 1rem;
+  font-size: 1.3rem;
+}
+
+/* Tabla de pólizas */
+.tabla-container {
+  overflow-x: auto;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 1rem;
+}
+
+th, td {
+  padding: 0.75rem;
+  text-align: left;
+  border-bottom: 1px solid #ddd;
+}
+
+th {
+  background-color: var(--color-rojo);
+  color: var(--color-blanco);
+  font-weight: bold;
+}
+
+tr:nth-child(even) {
+  background-color: var(--color-gris-claro);
+}
+
+tr:hover {
+  background-color: #e8e8e8;
+}
+
+/* Estados */
+.estado {
+  font-weight: bold;
+  padding: 0.25rem 0.5rem;
+  border-radius: 3px;
+  font-size: 0.85rem;
+}
+
+.estado-Vigente {
+  background-color: #d4edda;
+  color: #155724;
+}
+
+.estado-Por vencer {
+  background-color: #fff3cd;
+  color: #856404;
+}
+
+.estado-Vencida {
+  background-color: #f8d7da;
+  color: #721c24;
+}
+
+/* Inconsistencias */
+.inconsistencia {
+  color: #721c24;
+  margin-bottom: 0.5rem;
+  padding: 0.5rem;
+  background-color: #f8d7da;
+  border-radius: 3px;
+}
+
+/* Primas por aseguradora */
+.primas-lista {
+  list-style: none;
+  padding: 0;
+}
+
+.primas-lista li {
+  margin-bottom: 0.5rem;
+  padding: 0.5rem;
+  background-color: var(--color-gris-claro);
+  border-radius: 3px;
+}
+
+/* Enlaces */
+a {
+  color: var(--color-rojo);
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+/* Botón */
+.btn {
+  display: inline-block;
+  background-color: var(--color-rojo);
+  color: var(--color-blanco);
+  padding: 0.5rem 1rem;
+  border: none;
+  border-radius: 3px;
+  cursor: pointer;
+  text-decoration: none;
+  font-size: 0.9rem;
+}
+
+.btn:hover {
+  background-color: #8a1300;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .contadores {
+    flex-direction: column;
+  }
+
+  .contador {
+    min-width: auto;
+  }
+}
